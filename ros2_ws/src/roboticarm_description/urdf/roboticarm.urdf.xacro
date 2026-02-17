@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="roboticarm">
+
+    <!-- Start GZ or Ignition depending on ROS 2 Version -->
+    <xacro:arg name="is_ignition" default="true"/>
+  
+    <!-- Include Gazebo Parameters -->
+    <xacro:include filename="$(find roboticarm_description)/urdf/roboticarm_gazebo.xacro" />
+
+    <!-- Include ros2_control Plugins -->
+    <xacro:include filename="$(find roboticarm_description)/urdf/roboticarm_ros2_control.xacro" />
+    
+    <!-- Useful XACRO Variables (Properties) -->
+    <xacro:property name="PI" value="3.14159265359" />
+    <xacro:property name="effort" value="350.0" />
+    <xacro:property name="velocity" value="10.0" />
+
+    <!-- Useful Macros -->
+    <xacro:macro name="default_inertial" params="mass">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${mass}" />
+            <inertia ixx="${mass*0.02}" ixy="0.0" ixz="0.0"
+                     iyy="${mass*0.02}" iyz="0.0"
+                     izz="${mass*0.02}" />
+        </inertial>
+    </xacro:macro>
+
+
+    <!-- Links -->
+    <link name="world"/>
+
+    <link name="base_link">
+        <xacro:default_inertial mass="8.0"/>
+        <visual>
+            <origin xyz="0 0 0.01"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/base_cylinder.stl" scale="0.0001 0.0001 0.0001"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.01"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/base_cylinder.stl" scale="0.0001 0.0001 0.0001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="platform">
+        <xacro:default_inertial mass="2.0"/>
+        <visual>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/top_plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/top_plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="lower_arm">
+        <xacro:default_inertial mass="4.0"/>
+        <visual>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/lower_arm.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/lower_arm.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="top_arm">
+        <xacro:default_inertial mass="3.0"/>
+        <visual>
+            <origin rpy="0 1.59 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/top_arm.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.59 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/top_arm.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="wrist">
+        <xacro:default_inertial mass="1.0"/>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/wrist.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/wrist.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="clawbase">
+        <xacro:default_inertial mass="0.6"/>
+        <visual>
+            <origin rpy="0 3.18 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawbase.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 3.18 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawbase.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="clawr">
+        <xacro:default_inertial mass="0.2"/>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawr.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawr.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="clawl">
+        <xacro:default_inertial mass="0.2"/>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawl.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://roboticarm_description/meshes/clawl.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <!-- Joints -->
+    <joint name="virtual_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint> 
+
+    <joint name="joint_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="${effort}" lower="1.56" upper="4.68" velocity="${velocity}"/>
+        <parent link="base_link"/>
+        <child link="platform"/>
+        <origin rpy="0 0 1.5" xyz="0 0 0.48"/>
+    </joint>
+
+    <joint name="joint_2" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit effort="${effort}" lower="0.0" upper="3.12" velocity="${velocity}"/>
+        <parent link="platform"/>
+        <child link="lower_arm"/>
+        <origin xyz="0 0.19 0.28"/>
+    </joint>
+
+    <joint name="joint_3" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit effort="${effort}" lower="-1.7" upper="1.7" velocity="${velocity}"/>
+        <parent link="lower_arm"/>
+        <child link="top_arm"/>
+        <origin xyz="-0.25 1.0 0"/>
+    </joint>
+
+    <joint name="joint_4" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit effort="${effort}" lower="-1.7" upper="1.7" velocity="${velocity}"/>
+        <parent link="top_arm"/>
+        <child link="wrist"/>
+        <origin xyz="0.11 1.25 0"/>
+    </joint>
+
+    <joint name="joint_5" type="revolute">
+        <axis xyz="0 1 0"/>
+        <limit effort="${effort}" lower="-3.17" upper="0.0" velocity="${velocity}"/>
+        <parent link="wrist"/>
+        <child link="clawbase"/>
+        <origin xyz="0 0.63 0"/>
+    </joint>
+
+    <joint name="joint_6" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="${effort}" lower="-0.5" upper="0.0" velocity="${velocity}"/>
+        <parent link="clawbase"/>
+        <child link="clawr"/>
+        <origin rpy="0 0 -0.31" xyz="0.11 0.34 0"/>
+    </joint>
+
+    <joint name="joint_7" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="${effort}" lower="0" upper="0.5" velocity="${velocity}"/>
+        <parent link="clawbase"/>
+        <child link="clawl"/>
+        <origin rpy="0 0 0.22" xyz="-0.16 0.30 0"/>
+        <mimic joint="joint_6" multiplier="-1"/>
+    </joint>
+
+</robot>
