@@ -1,4 +1,4 @@
-# Robotic Arm (3 DOF) Demo for ROS2
+# Robotic Arm (5 DOF) Demo for ROS2
 
 ## Overview
 
@@ -10,7 +10,7 @@ This package has been tested with the following hardwares: \
 
 Raspberry Pi 4B, 4GB RAM. \
 PCA9685 sensor breakout board used: https://www.nxp.com/products/power-management/lighting-driver-and-controller-ics/led-controllers/16-channel-12-bit-pwm-fm-plus-ic-bus-led-controller:PCA9685 \
-Towerpro SG90 Servo motor: https://www.towerpro.com.tw/product/sg90-7/
+Towerpro MG996R Servo motor: https://towerpro.com.tw/product/mg996r/
 
 ### Preferred Environment Setup (Host PC)
 
@@ -41,7 +41,7 @@ git clone --recursive https://github.com/kimsniper/ros2_roboticarm_demo.git
 
 ### Instructions for PC ROS2 workspace
 
-1. Navigate to < Repo path on your PC >/ros2_roboticarm_demo/roboticarm_ros2_ws
+1. Navigate to < Repo path on your PC >/ros2_5dof_roboticarm/ros2_ws
 2. Build the packages
 ```bash
 colcon build
@@ -98,8 +98,4 @@ ros2 run ros2_jointprocessor ros2_jointprocessor
 The nodes should be running by now.
 
 ### Working Demo Videos
-![Demo](./images/ik_control_demo.gif)
-Inverse Kinematics Demo with MoveIt2: https://www.linkedin.com/posts/activity-7198200785514500096-aaFl?utm_source=share&utm_medium=member_desktop
 
-![Demo](./images/direct_control_demo.gif)
-Interactive Robotic Arm Control: https://www.linkedin.com/posts/activity-7198545377602461696-PqYb?utm_source=share&utm_medium=member_desktop
