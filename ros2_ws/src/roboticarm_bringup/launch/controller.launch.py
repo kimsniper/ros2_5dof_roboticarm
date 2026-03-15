@@ -2,7 +2,7 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import UnlessCondition
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch.substitutions import Command
@@ -46,7 +46,7 @@ def generate_launch_description():
         executable="ros2_control_node",
         parameters=[
             {"robot_description": robot_description,
-             "use_sim_time": is_sim},
+             "use_sim_time": PythonExpression([is_sim, " == 'True'"])},
             os.path.join(
                 get_package_share_directory("roboticarm_controller"),
                 "config",
