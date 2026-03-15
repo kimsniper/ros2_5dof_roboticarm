@@ -34,7 +34,8 @@ def generate_launch_description():
             "xacro ",
             LaunchConfiguration("model"),
             " is_ignition:=",
-            is_ignition
+            is_ignition,
+            " is_sim:=True"
         ]),
         value_type=str
     )

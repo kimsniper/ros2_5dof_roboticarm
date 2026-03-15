@@ -13,7 +13,7 @@ def generate_launch_description():
                 "launch",
                 "controller.launch.py"
             ),
-            launch_arguments={"is_sim": "True"}.items()
+            launch_arguments={"is_sim": "False"}.items()
         )
 
     joint_state_publisher_gui_node = Node(
