@@ -13,7 +13,7 @@ def generate_launch_description():
 
     is_sim_arg = DeclareLaunchArgument(
         "is_sim",
-        default_value="True"
+        default_value="False"
     )
 
     is_sim = LaunchConfiguration("is_sim")
