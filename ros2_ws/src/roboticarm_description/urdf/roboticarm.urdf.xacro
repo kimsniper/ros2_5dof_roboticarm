@@ -180,7 +180,7 @@
 
     <joint name="joint_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="${effort}" lower="1.56" upper="4.68" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="-1.56" upper="1.56" velocity="${velocity}"/>
         <parent link="base_link"/>
         <child link="platform"/>
         <origin rpy="0 0 1.5" xyz="0 0 0.48"/>
