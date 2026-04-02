@@ -180,23 +180,23 @@
 
     <joint name="joint_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="${effort}" lower="1.56" upper="4.68" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="${-PI/2}" upper="${PI/2}" velocity="${velocity}"/>
         <parent link="base_link"/>
         <child link="platform"/>
-        <origin rpy="0 0 1.5" xyz="0 0 0.48"/>
+        <origin rpy="0 0 ${-PI/2}" xyz="0 0 0.48"/>
     </joint>
 
     <joint name="joint_2" type="revolute">
         <axis xyz="1 0 0"/>
-        <limit effort="${effort}" lower="0.0" upper="3.12" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="${-PI/2}" upper="${PI/2}" velocity="${velocity}"/>
         <parent link="platform"/>
         <child link="lower_arm"/>
-        <origin xyz="0 0.19 0.28"/>
+        <origin rpy="${PI/2} 0 0" xyz="0 0.19 0.28"/>
     </joint>
 
     <joint name="joint_3" type="revolute">
         <axis xyz="1 0 0"/>
-        <limit effort="${effort}" lower="-1.7" upper="1.7" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="${-PI/2}" upper="${PI/2}" velocity="${velocity}"/>
         <parent link="lower_arm"/>
         <child link="top_arm"/>
         <origin xyz="-0.25 1.0 0"/>
@@ -204,7 +204,7 @@
 
     <joint name="joint_4" type="revolute">
         <axis xyz="1 0 0"/>
-        <limit effort="${effort}" lower="-1.7" upper="1.7" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="${-PI/2}" upper="${PI/2}" velocity="${velocity}"/>
         <parent link="top_arm"/>
         <child link="wrist"/>
         <origin xyz="0.11 1.25 0"/>
@@ -212,7 +212,7 @@
 
     <joint name="joint_5" type="revolute">
         <axis xyz="0 1 0"/>
-        <limit effort="${effort}" lower="-3.17" upper="0.0" velocity="${velocity}"/>
+        <limit effort="${effort}" lower="${-PI/2}" upper="${PI/2}" velocity="${velocity}"/>
         <parent link="wrist"/>
         <child link="clawbase"/>
         <origin xyz="0 0.63 0"/>
