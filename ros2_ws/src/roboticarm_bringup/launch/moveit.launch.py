@@ -18,11 +18,16 @@ def generate_launch_description():
 
     moveit_config = (
         MoveItConfigsBuilder("roboticarm", package_name="roboticarm_moveit")
-        .robot_description(file_path=os.path.join(
-            get_package_share_directory("roboticarm_description"),
-            "urdf",
-            "roboticarm.urdf.xacro"
-            )
+        .robot_description(
+            file_path=os.path.join(
+                get_package_share_directory("roboticarm_description"),
+                "urdf",
+                "roboticarm.urdf.xacro"
+            ),
+            mappings={
+                "is_sim": is_sim,
+                "is_ignition": "True"
+            }
         )
         .robot_description_semantic(file_path="config/roboticarm.srdf")
         .trajectory_execution(file_path="config/moveit_controllers.yaml")
@@ -39,7 +44,6 @@ def generate_launch_description():
         arguments=["--ros-args", "--log-level", "info"],
     )
 
-    # RViz
     rviz_config = os.path.join(
         get_package_share_directory("roboticarm_moveit"),
             "config",
