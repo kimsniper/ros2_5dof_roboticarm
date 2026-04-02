@@ -5,20 +5,26 @@
 
         <xacro:property name="PI" value="3.14159265359" />
 
-        <!-- ros2_control Gazebo -->
-        <!-- ROS 2 Humble -->
-        <xacro:if value="$(arg is_ignition)">
+        <!-- ros2_control PCA9685 -->
+        <xacro:unless value="$(arg is_sim)">
             <hardware>
-                <plugin>ign_ros2_control/IgnitionSystem</plugin>
-            </hardware>
-        </xacro:if>
-
-        <!-- ROS 2 Iron or above -->
-        <xacro:unless value="$(arg is_ignition)">
-            <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                <plugin>ros2_pca9685/PCA9685Hardware</plugin>
             </hardware>
         </xacro:unless>
+
+        <!-- ros2_control Gazebo -->
+        <xacro:if value="$(arg is_sim)">
+            <hardware>
+                <!-- ROS 2 Humble -->
+                <xacro:if value="$(arg is_ignition)">
+                    <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                </xacro:if>
+                <!-- ROS 2 Iron or above -->
+                <xacro:unless value="$(arg is_ignition)">
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                </xacro:unless>
+            </hardware>
+        </xacro:if>
 
         <joint name="joint_1">
             <command_interface name="position">
