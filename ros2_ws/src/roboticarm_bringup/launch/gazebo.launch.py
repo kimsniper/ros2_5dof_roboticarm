@@ -20,6 +20,8 @@ def generate_launch_description():
                                       description="Absolute path to robot urdf file"
     )
 
+    is_sim_arg = DeclareLaunchArgument(name="is_sim", default_value="True")
+
     gazebo_resource_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=[
@@ -33,6 +35,7 @@ def generate_launch_description():
     robot_description = ParameterValue(Command([
             "xacro ",
             LaunchConfiguration("model"),
+            " is_sim:=True",
             " is_ignition:=",
             is_ignition
         ]),
@@ -79,3 +82,4 @@ def generate_launch_description():
         gz_spawn_entity,
         gz_ros2_bridge
     ])
+    

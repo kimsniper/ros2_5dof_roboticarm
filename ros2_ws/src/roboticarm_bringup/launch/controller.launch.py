@@ -2,10 +2,9 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import UnlessCondition
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
-from launch.substitutions import Command
 from ament_index_python.packages import get_package_share_directory
 
 
@@ -27,6 +26,9 @@ def generate_launch_description():
                     "urdf",
                     "roboticarm.urdf.xacro",
                 ),
+                " is_sim:=",
+                is_sim,
+                " is_ignition:=True"
             ]
         ),
         value_type=str,
@@ -86,3 +88,4 @@ def generate_launch_description():
             gripper_controller_spawner,
         ]
     )
+    

@@ -17,8 +17,15 @@ def generate_launch_description():
                                         ),
                                       description="Absolute path to robot urdf file")
 
-    robot_description = ParameterValue(Command(["xacro ", LaunchConfiguration("model")]),
-                                       value_type=str)
+    robot_description = ParameterValue(
+        Command([
+            "xacro ",
+            LaunchConfiguration("model"),
+            " is_sim:=True",
+            " is_ignition:=True"
+        ]),
+        value_type=str
+    )
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
