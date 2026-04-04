@@ -23,8 +23,8 @@ public:
         current_positions_.resize(6, 0.0);
         target_positions_.resize(6, 0.0);
 
-        smoothing_rate_ = 50.0;
-        alpha_ = 0.2;
+        smoothing_rate_ = 100.0;
+        alpha_ = 0.1;
 
         timer_ = create_wall_timer(
             std::chrono::milliseconds(int(1000.0 / smoothing_rate_)),
